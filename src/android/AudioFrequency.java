@@ -24,6 +24,7 @@ public class AudioFrequency extends CordovaPlugin
 
     private final FrequencyHandler handler = new FrequencyHandler(this);
 
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("start")) {

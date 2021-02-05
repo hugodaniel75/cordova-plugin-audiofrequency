@@ -1,29 +1,34 @@
 {
-  "name": "cordova-plugin-audiofrequency",
+  "name": "cordova.plugin.audiofrequency",
   "version": "0.0.1",
-  "description": "Obtener la frecuencia en Hz capturado por el microfono del dispositivo",
+  "description": "An Android Cordova plugin that allows users to display simple Toast messages at the bottom of the screen.",
   "cordova": {
-    "id": "com.cellules.cordova.audiofrequency",
+    "id": "cordova-plugin-audiofrequency",
     "platforms": [
-      "ios",
-      "android",
-      "browser"
+      "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hugodaniel75/cordova-plugin-audiofrequency.git"
+    "url": "git+https://github.com/hugodaniel75/cordova-plugin-audiofrequency"
   },
   "keywords": [
+    "Audio",
+    "Frequency",
+    "Message",
     "ecosystem:cordova",
-    "cordova-ios",
-    "cordova-android",
-    "cordova-browser"
+    "cordova-android"
   ],
-  "author": "Hugo Miguez",
-  "license": "ISC",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=6.0.0"
+    }
+  ],
+  "author": "Stanley Idesis <stan.idesis@gmail.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hugodaniel75/cordova-plugin-audiofrequency/issues"
+    "url": "https://github.com/stanidesis/toastyplugin/issues"
   },
-  "homepage": "https://github.com/hugodaniel75/cordova-plugin-audiofrequency#readme"
+  "homepage": "https://github.com/stanidesis/toastyplugin/"
 }
