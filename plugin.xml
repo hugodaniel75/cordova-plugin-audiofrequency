@@ -5,9 +5,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>AudioFrequency</name>
+    <repo>git@github.com:hugodaniel75/cordova-plugin-audiofrequency.git</repo>
 
     <js-module name="AudioFrequency" src="www/audiofrequency.js">
-        <clobbers target="cordova.plugins.audiofrequency" />
+        <clobbers target="audiofrequency" />
     </js-module>
 
     <!-- ios -->
