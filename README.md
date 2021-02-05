@@ -9,7 +9,7 @@ It adds the following `window` event:
 ## Installation
 
 ```
-cordova plugin add cordova-plugin-audiofrequency
+cordova plugin add https://github.com/hugodaniel75/cordova-plugin-audiofrequency.git
 ```
 
 ## Supported Platforms
