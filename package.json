@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Obtener la frecuencia en Hz capturado por el microfono del dispositivo",
   "cordova": {
-    "id": "cordova-plugin-audiofrequency",
+    "id": "com.cellules.cordova.audiofrequency",
     "platforms": [
       "ios",
       "android",
