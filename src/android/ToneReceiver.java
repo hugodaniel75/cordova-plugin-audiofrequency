@@ -6,6 +6,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import org.jtransforms.fft.DoubleFFT_1D;
 
@@ -82,10 +83,39 @@ public class ToneReceiver extends Thread {
                     double[] magnitude = magnitude(fftData);
 
                     // Get the largest magnitude peak
-                    int peakIndex = peakIndex(magnitude);
+                    int peakIndex = peakIndex(magnitude, 0, magnitude.length );
 
                     // gets frequency value for peak index
                     double frequency = calculateFrequency(peakIndex);
+
+                    int freq2 = (magnitude.length)-1;
+                    int freq3 = (magnitude.length/2);
+
+                    double frequency2 = calculateFrequency(freq2);
+                    double frequency3 = calculateFrequency(freq3);
+
+                    //calculamos los índices para las frecuencias que queremos obtener. Rango entre 17.000 - 18.000
+
+                    
+                    //Log.i("frequency: ", "magnitude: " + magnitude[1] + " fftData: " + fftData.length);
+                    //Log.i("frequency: ", "magnitude 2: " + magnitude[2] + " fftData 2: " + fftData[2]);
+                    Log.i("frecuencia1: ", ": " + Math.round(frequency));
+                    //Log.i("frecuencia 2: ", ": " + freq2 + " value: " + Math.round(frequency2));
+                    //Log.i("frecuencia 3: ", ": " + freq3 + " value: " + Math.round(frequency3));
+                    //Log.i("sizes", " bufferSize: " + bufferSize + " fftData: " + fftData.length + " magnitude: " + magnitude.length);
+                    Log.i("sample rate :" , "" + getIndex(11025));
+
+                    int start = getIndex(16000);
+                    int end = getIndex(18050);
+                    int peakIndex2 = peakIndex(magnitude, start, end );
+                    double frequency4 = calculateFrequency(peakIndex2);
+                    Log.i("frecuencia rango: ", " peakIndex2: " + peakIndex2 + " value: " + Math.round(frequency4));
+
+                    int end2 = getIndex(18100);
+                    int peakIndex3 = peakIndex(magnitude, start, end2 );
+                    double frequency5 = calculateFrequency(peakIndex3);
+                    Log.i("frecuencia rango 2: ", " peakIndex3: " + peakIndex3 + " value: " + Math.round(frequency5));
+
 
                     // send frequency to handler
                     message = handler.obtainMessage();
@@ -139,10 +169,11 @@ public class ToneReceiver extends Thread {
          return magnitude;
     }
 
-    private int peakIndex(double[] data) {
-        int peakIndex = 0;
-        double peak = data[0];
-        for(int i = 0; i < data.length; i++){
+    private int peakIndex(double[] data, int start, int end) {
+        int peakIndex = start;
+        double peak = data[start];
+        //for(int i = 0; i < data.length; i++){
+        for(int i = start; i < end; i++){
             if(peak < data[i]) {
                 peak = data[i];
                 peakIndex = i;
@@ -153,5 +184,12 @@ public class ToneReceiver extends Thread {
 
     private double calculateFrequency(double index) {
         return sampleRateInHz * index / bufferSize;
+    }
+
+    private int getIndex(int sampleHz){
+        int rateHz = sampleRateInHz / 2;
+        int mag = bufferSize / 2;
+
+        return(sampleHz * mag) / rateHz;
     }
 }
