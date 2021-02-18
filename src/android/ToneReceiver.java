@@ -29,10 +29,10 @@ public class ToneReceiver extends Thread {
     private Bundle messageBundle = new Bundle();
 
     private int sampleRateHzInit = 16000;
-    private int sampleRateHzStartControl = 17000;
-    private int sampleRateHzStart = 18000;
-    private int sampleRateInterval = 100;
-    private int maxSamples = 10;
+    private int sampleRateHzStartControl = 18000;
+    private int sampleRateHzStart = 19000;
+    private int sampleRateInterval = 20;
+    private int maxSamples = 20;
 
     public ToneReceiver() {
         // use the mic with Auto Gain Control turned off
@@ -95,7 +95,7 @@ public class ToneReceiver extends Thread {
                     /*for(int n=0; n < magnitude.length; n++) {
                         Log.i("magnitude: ", "[" + n +"]: " + magnitude[n]);
                     }*/
-                    Log.i("magnitude size: ", ": " + magnitude.length);
+                    //Log.i("magnitude size: ", ": " + magnitude.length);
 
                     // Get the largest magnitude peak
                     int peakIndex = peakIndex(magnitude, 0, magnitude.length );
@@ -103,41 +103,54 @@ public class ToneReceiver extends Thread {
                     // gets frequency value for peak index
                     double frequency = calculateFrequency(peakIndex);
 
-                    int freq2 = (magnitude.length)-1;
-                    int freq3 = (magnitude.length/2);
-
-                    double frequency2 = calculateFrequency(freq2);
-                    double frequency3 = calculateFrequency(freq3);
 
                     //calculamos los índices para las frecuencias que queremos obtener. Rango entre 17.000 - 18.000
 
 
                     //Log.i("frequency: ", "magnitude: " + magnitude[1] + " fftData: " + fftData.length);
                     //Log.i("frequency: ", "magnitude 2: " + magnitude[2] + " fftData 2: " + fftData[2]);
-                    Log.i("peakIndex: ", ": " + peakIndex);
-                    Log.i("frecuencia1: ", ": " + Math.round(frequency));
+                    //Log.i("peakIndex: ", ": " + peakIndex);
+                    //Log.i("frecuencia1: ", ": " + Math.round(frequency));
                     //Log.i("frecuencia 2: ", ": " + freq2 + " value: " + Math.round(frequency2));
                     //Log.i("frecuencia 3: ", ": " + freq3 + " value: " + Math.round(frequency3));
                     //Log.i("sizes", " bufferSize: " + bufferSize + " fftData: " + fftData.length + " magnitude: " + magnitude.length);
-                    Log.i("sample rate :" , "" + getIndex(11025));
+                    //Log.i("sample rate :" , "" + getIndex(11025));
 
                     int start = getIndex(this.sampleRateHzInit);
+                    /*int endControl = getIndex(this.sampleRateHzStartControl);
+                    int peakIndexControl = peakIndex(magnitude, start, endControl );
+                    double frequencyControl = Math.round(calculateFrequency(peakIndexControl));
+                    Log.i("sample rate :" , "frequencyControl: " + frequencyControl);
+
+                    int endTest = getIndex(this.sampleRateHzStart);
+                    int peakIndexTest = peakIndex(magnitude, start, endTest );
+                    double frequencyTest = Math.round(calculateFrequency(peakIndexTest));
+                    Log.i("sample rate :" , "frequencyTest: " + frequencyTest);*/
+
+                    /*for(int n=0; n < 5; n++){
+                        int endTest = getIndex(this.sampleRateHzStart);
+                        int peakIndexTest = peakIndex(magnitude, start, endTest );
+                        double frequencyTest = Math.round(calculateFrequency(peakIndexTest));
+                        Log.i("sample rate :" , "frequencyTest[" + n +"]: " + frequencyTest);
+                    }*/
+
+
+
+                    //int start = getIndex(this.sampleRateHzInit);
                     /*int end = getIndex(18050);
                     int peakIndex2 = peakIndex(magnitude, start, end );
                     double frequency4 = calculateFrequency(peakIndex2);
                     Log.i("frecuencia rango: ", " peakIndex2: " + peakIndex2 + " value: " + Math.round(frequency4));
-
                     int end2 = getIndex(18100);
                     int peakIndex3 = peakIndex(magnitude, start, end2 );
                     double frequency5 = calculateFrequency(peakIndex3);
                     Log.i("frecuencia rango 2: ", " peakIndex3: " + peakIndex3 + " value: " + Math.round(frequency5));*/
 
-                    for(int n=0; n < this.maxSamples; n++){
+                    for(int n=0; n < this.maxSamples; n+=2){
                         int value1 = this.sampleRateHzStart + (this.sampleRateInterval * n);
                         int value2 = this.sampleRateHzStart + (this.sampleRateInterval * (n + 1));
-                        /*int valueControl1 = this.sampleRateHzStart + (this.sampleRateInterval * n);
+                        int valueControl1 = this.sampleRateHzStart + (this.sampleRateInterval * n);
                         int valueControl2 = this.sampleRateHzStartControl + (this.sampleRateInterval * (n + 1));
-
                         boolean controlActive = false;
                         //calculo muestras de control
                         int endControl = getIndex(valueControl2);
@@ -145,7 +158,7 @@ public class ToneReceiver extends Thread {
                         double frequencyControl = Math.round(calculateFrequency(peakIndexControl));
                         if(frequencyControl > valueControl1 && frequencyControl < valueControl2){
                             controlActive = true;
-                        }*/
+                        }
 
                         //calculo de muestras
                         int end = getIndex(value2);
@@ -153,12 +166,14 @@ public class ToneReceiver extends Thread {
                         double frequencyTemp = Math.round(calculateFrequency(peakIndexTemp));
                         if(frequencyTemp > value1 && frequencyTemp < value2){
                             dbdata[n] = 1;
+                            Log.i("frequency", "index: " + n + " active: " + dbdata[n] + " start: " + value1 + " end: " + value2 + " value: " + frequencyTemp +  " data: " + dbdata[n]);
                         }else{
                             dbdata[n] = 0;
                         }
-                        Log.i("f: ", "n: " + n + " value1: " + value1 + " value2: " + value2 + " start: " + start + " end: " + end + " peakIndexTemp: " + peakIndexTemp);
+                        //Log.i("frequency", "index: " + n + " active: " + dbdata[n] + " start: " + value1 + " end: " + value2 + " value: " + frequencyTemp +  " data: " + dbdata[n]);
+                        //Log.i("f: ", "n: " + n + " value1: " + value1 + " value2: " + value2 + " start: " + start + " end: " + end + " peakIndexTemp: " + peakIndexTemp);
 
-                        Log.i("frecuencia rango 2: ", " peakIndexTemp: [" + n + "]: " + peakIndexTemp +  " frequencyTemp: [" + n + "]: " + frequencyTemp +  " data: " + dbdata[n]);
+                        //Log.i("frecuencia rango 2: ", " peakIndexTemp: [" + n + "]: " + peakIndexTemp +  " frequencyTemp: [" + n + "]: " + frequencyTemp +  " data: " + dbdata[n]);
                     }
 
 
@@ -225,11 +240,14 @@ public class ToneReceiver extends Thread {
             }
         }
 
-        Log.i("peakIndex Fun 1: ", ": " + data[peakIndex-1]);
-        Log.i("peakIndex Fun 2: ", ": " + data[peakIndex]);
-        if(peakIndex+1 < data.length) {
-            Log.i("peakIndex Fun 3: ", ": " + data[peakIndex + 1]);
-        }
+        /*if(peakIndex > 0){
+            Log.i("peakIndex Fun 1: ", ": " + data[peakIndex-1]);
+            Log.i("peakIndex Fun 2: ", ": " + data[peakIndex]);
+            if(peakIndex+1 < data.length) {
+                Log.i("peakIndex Fun 3: ", ": " + data[peakIndex + 1]);
+            }
+        }*/
+
 
         return peakIndex;
     }
