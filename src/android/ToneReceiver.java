@@ -30,7 +30,7 @@ public class ToneReceiver extends Thread {
 
     private int sampleRateHzInit = 10000;
     private int sampleRateHzStart = 19000;
-    private int sampleRateHzEnd = 20000;
+    private int sampleRateHzEnd = 21000;
 
     public ToneReceiver() {
         // use the mic with Auto Gain Control turned off
