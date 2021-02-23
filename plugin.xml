@@ -16,7 +16,7 @@
     </engines>
   
     <js-module src="www/audiofrequency.js" name="audioFrequencyPlugin">
-        <clobbers target="window.plugins.audioFrequencyPlugin" />
+        <clobbers target="audioFrequencyPlugin" />
     </js-module>
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">

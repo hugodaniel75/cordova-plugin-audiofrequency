@@ -13,6 +13,10 @@ var AudioFrequency = function () {
     for (var key in this.channels) {
         this.channels[key].onHasSubscribersChange = AudioFrequency.onHasSubscribersChange;
     }
+
+    this.stop = function(){
+        exec(null, null, "AudioFrequency", "stop", []);
+    }
 };
 
 /**

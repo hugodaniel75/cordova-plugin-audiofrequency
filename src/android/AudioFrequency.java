@@ -51,7 +51,8 @@ public class AudioFrequency extends CordovaPlugin
         }
 
         else if (action.equals("stop")) {
-            receiver.interrupt();
+            //receiver.interrupt();
+            receiver.setRun(false);
             this.sendUpdate(new JSONObject(), false); // release status callback in JS side
             this.callbackContext = null;
             callbackContext.success();

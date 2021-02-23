@@ -32,6 +32,8 @@ public class ToneReceiver extends Thread {
     private int sampleRateHzStart = 19000;
     private int sampleRateHzEnd = 21000;
 
+    private boolean isRun = true;
+
     public ToneReceiver() {
         // use the mic with Auto Gain Control turned off
         recorder = new AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, sampleRateInHz, channelConfig, audioFormat, bufferSize);
@@ -50,6 +52,10 @@ public class ToneReceiver extends Thread {
         this.handler = handler;
     }
 
+    public void setRun(boolean value){
+        this.isRun = value;
+    }
+
     @Override
     public void run() {
         int numReadBytes = 0;
@@ -61,7 +67,7 @@ public class ToneReceiver extends Thread {
         {
             recorder.startRecording();
 
-            while (!isInterrupted()) {
+            while (!isInterrupted() && this.isRun) {
                 numReadBytes = recorder.read(audioBuffer, 0, bufferSize);
 
                 if (numReadBytes > 0) {
@@ -81,6 +87,8 @@ public class ToneReceiver extends Thread {
                         fftData[2*i+1] = 0;
                     }
 
+                    Log.i("data", "" + fftData.length);
+
                     // FFT compute
                     fft.complexForward(fftData);
 
@@ -97,14 +105,6 @@ public class ToneReceiver extends Thread {
                     int endTest = getIndex(this.sampleRateHzEnd);
                     int peakIndexTest = peakIndex(magnitude, start, endTest );
                     double frequencyTest = Math.round(calculateFrequency(peakIndexTest));
-
-                    /*double value = 0;
-                    if(frequencyTest >= this.sampleRateHzStart && frequencyTest <= this.sampleRateHzEnd){
-                        value = frequencyTest - this.sampleRateHzStart;
-
-                    }*/
-
-                    //Log.i("sample rate :" , "frequencyTest: " + frequencyTest + " value: " + value);
 
                     // send frequency to handler
                     message = handler.obtainMessage();
