@@ -87,8 +87,6 @@ public class ToneReceiver extends Thread {
                         fftData[2*i+1] = 0;
                     }
 
-                    Log.i("data", "" + fftData.length);
-
                     // FFT compute
                     fft.complexForward(fftData);
 
