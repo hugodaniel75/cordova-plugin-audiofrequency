@@ -18,6 +18,25 @@
     <js-module src="www/audiofrequency.js" name="audioFrequencyPlugin">
         <clobbers target="audioFrequencyPlugin" />
     </js-module>
+
+    <!-- ios -->
+    <!--<platform name="ios">
+
+        <config-file parent="/*" target="config.xml">
+            <feature name="AudioFrequency">
+                <param name="ios-package" value="CDVAudioFrequency" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/ios/CDVAudioFrequency.m" />
+        <source-file src="src/ios/ToneReceiver.h" />
+        <source-file src="src/ios/ToneReceiver.m" />
+
+        <framework src="Accelerate.framework" weak="true" />
+        <framework src="AVFoundation.framework" weak="true" />
+
+    </platform>-->
+
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AudioFrequency">
